@@ -1,0 +1,24 @@
+- name: 编译安装nginx
+  ansible.builtin.shell:
+    cmd: "./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --with-openssl=/usr/local/src/openssl-1.0.2l && make && make install"
+    chdir: "/usr/local/src/nginx-1.24.0"
+  become: yes
+
+- name: 设置启动文件
+  template:
+    src: nginx.service.j2
+    dest: /etc/systemd/system/nginx.service
+  notify: Start nginx
+
+- name: 开机自启nginx
+  systemd:
+    name: nginx
+    enabled: yes
+  become: yes
+
+- name: 复制index.html到远程主机
+  copy:
+    src: files/index.html
+    dest: /usr/local/nginx/html/index.html
+  become: yes
+

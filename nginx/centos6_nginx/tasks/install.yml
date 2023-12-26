@@ -1,0 +1,31 @@
+- name: 编译安装nginx
+  ansible.builtin.shell:
+    cmd: "./configure --user=www --group=www --prefix=/usr/local/nginx --with-http_stub_status_module --with-http_ssl_module --with-http_v2_module --with-http_gzip_static_module --with-ipv6 --with-http_sub_module --with-openssl=/usr/local/src/openssl-1.0.2l && make && make install"
+    chdir: "/usr/local/src/nginx-1.24.0"
+  become: yes
+
+- name: 设置管理脚本
+  template:
+    src: nginx.init.j2
+    dest: "/etc/init.d/nginx"
+
+- name: 设置 /etc/init.d/nginx 脚本的执行权限
+  file:
+    path: "/etc/init.d/nginx"
+    mode: '+x'
+  become: yes
+
+- name: 启动nginx
+  command: "/etc/init.d/nginx start"
+  become: yes
+
+- name: 设置开机自启
+  command: "chkconfig --level 345 nginx on"
+  become: yes
+
+- name: 复制index.html到远程主机
+  copy:
+    src: files/index.html
+    dest: /usr/local/nginx/html/index.html
+  become: yes
+

@@ -1,0 +1,59 @@
+- name: 备份/etc/yum.repos.d所有文件
+  ansible.builtin.shell:
+    cmd: |
+      find /etc/yum.repos.d -name "*.repo" -exec mv {} {}.backup \;
+
+- name: 下载新的 CentOS-Base.repo 文件
+  ansible.builtin.get_url:
+    url: https://mirrors.aliyun.com/repo/Centos-vault-8.5.2111.repo
+    dest: /etc/yum.repos.d/CentOS-Base.repo
+    backup: yes
+  become: yes
+
+- name: 清理 yum 缓存
+  ansible.builtin.shell:
+    cmd: yum clean all && yum makecache
+  become: yes
+
+
+- name: 创建www组
+  group:
+    name: www
+    state: present
+
+- name: 创建www用户
+  user:
+    name: www
+    group: www
+    shell: /sbin/nologin
+    create_home: no
+    system: yes
+
+- name: 安装所需的程序包
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - gcc
+    - make
+    - zlib-devel
+    - pcre-devel
+    - openssl-devel
+    
+- name: 复制安装包到远程主机
+  copy:
+    src: "files/{{ item }}"
+    dest: "/usr/local/src/{{ item }}"
+  with_items:
+    - nginx-1.24.0.tar.gz
+    - openssl-1.0.2l.tar.gz
+
+- name: 解压安装包
+  unarchive:
+    src: /usr/local/src/{{ item }} 
+    dest: /usr/local/src/
+    remote_src: yes 
+  with_items:
+    - nginx-1.24.0.tar.gz
+    - openssl-1.0.2l.tar.gz
+

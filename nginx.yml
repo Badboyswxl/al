@@ -13,3 +13,8 @@
       include_role:
         name: nginx/centos7_nginx
       when: "'CentOS' in ansible_distribution and ansible_distribution_major_version == '7'"
+
+    - name: Execute CentOS 8 tasks
+      include_role:
+        name: nginx/centos8_nginx
+      when: "'CentOS' in ansible_distribution and ansible_distribution_major_version == '8'"

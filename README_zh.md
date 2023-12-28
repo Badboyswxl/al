@@ -113,6 +113,14 @@ cd /etc/ansible/roles/al
 ansible-playbook nginx.yml
 ```
 
+#### 2.8：开始部署Mysql
+
+```
+cd /etc/ansible/roles/al
+ansible-playbook mysql.yml
+```
+
+### 
 ### 3：开发进度：
 
 #### 3.1:目前进度：

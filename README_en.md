@@ -104,12 +104,21 @@ vim nginx.yml
 .........
 ```
 
-#### 2.7: Start Deployment
+#### 2.7: Start Deployment Nginx
 
 ```
 cd /etc/ansible/roles/al
 ansible-playbook nginx.yml
 ```
+
+#### 2.7: Start Deployment Mysql
+
+```
+cd /etc/ansible/roles/al
+ansible-playbook mysql.yml
+```
+
+
 
 ### 3: Development Progress
 

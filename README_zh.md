@@ -121,13 +121,16 @@ ansible-playbook nginx.yml
 
 #### 3.2:后续开发：
 
-- 使用ansible安装nginx - 支持系统centos8、Ubuntu、Debian - 进行中‘；
+- 使用ansible安装nginx - 支持系统centos8 - 进行中‘；
 - 使用ansible安装mysql - 未进行
 - 使用ansible安装php - 未进行
 
 
 
 ## 更新记录
+### [v1.0.1] - 2023/12/27
+
+- [改进] Nginx安装支持系统centos8
 
 ### [v1.0.0] - 2023/12/26
 

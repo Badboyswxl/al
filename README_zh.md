@@ -106,7 +106,7 @@ vim nginx.yml
 .........
 ```
 
-#### 2.7：开始部署
+#### 2.7：开始部署Nginx
 
 ```
 cd /etc/ansible/roles/al
@@ -119,6 +119,7 @@ ansible-playbook nginx.yml
 cd /etc/ansible/roles/al
 ansible-playbook mysql.yml
 ```
+**注：mysql安装完成后，需要重新登陆shell，或者在已登录的shell执行`bash`就可以直接使用mysql了**
 
 ### 
 ### 3：开发进度：
@@ -129,13 +130,17 @@ ansible-playbook mysql.yml
 
 #### 3.2:后续开发：
 
-- 使用ansible安装nginx - 支持系统centos8 - 进行中‘；
-- 使用ansible安装mysql - 未进行
+- 使用ansible安装nginx - 支持系统centos8 - 已完成！
+- 使用ansible安装mysql - 已完成！
 - 使用ansible安装php - 未进行
 
 
 
 ## 更新记录
+### [v1.0.2] - 2023/12/28
+
+- [新增] 新增ansible安装mysql（支持centos6、centos7、centos8）
+
 ### [v1.0.1] - 2023/12/27
 
 - [改进] Nginx安装支持系统centos8

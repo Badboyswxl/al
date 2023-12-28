@@ -117,7 +117,7 @@ ansible-playbook nginx.yml
 cd /etc/ansible/roles/al
 ansible-playbook mysql.yml
 ```
-
+**Note: After installing MySQL, you need to log in to the shell again, or execute `bash` on the already logged in shell to directly use MySQL**
 
 
 ### 3: Development Progress
@@ -128,8 +128,8 @@ ansible-playbook mysql.yml
 
 #### 3.2: Future Development
 
-- Install nginx using Ansible - In progress (supporting CentOS 8)
-- Install MySQL using Ansible - Not started
+- Installing nginx using ansible - supporting system centos8- completed！
+- Installing MySQL using Ansible - Completed!
 - Install PHP using Ansible - Not started
 
 
@@ -137,10 +137,13 @@ ansible-playbook mysql.yml
 
 
 ## Changelog
-### [v1.0.0] - 2023/12/27
+### [v1.0.2] - 2023/12/28
+
+- [New] Added Ansible to install MySQL (supports Centos6, Centos7, Centos8).
+
+### [v1.0.1] - 2023/12/27
 
 - [New] Nginx installation support system centos8.
-
 
 ### [v1.0.0] - 2023/12/26
 

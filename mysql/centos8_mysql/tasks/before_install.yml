@@ -1,0 +1,62 @@
+- name: Create backup directory
+  ansible.builtin.file:
+    path: /usr/local/src/yum_backup
+    state: directory
+
+- name: Move .repo files to backup directory
+  ansible.builtin.shell:
+    cmd: "mv /etc/yum.repos.d/* /usr/local/src/yum_backup/"
+
+- name: Wget CentOS-Base.repo files
+  ansible.builtin.get_url:
+    url: https://mirrors.aliyun.com/repo/Centos-vault-8.5.2111.repo
+    dest: /etc/yum.repos.d/CentOS-Base.repo
+    backup: yes
+  become: yes
+
+- name: Clean up the yum cache
+  ansible.builtin.shell:
+    cmd: yum clean all && yum makecache
+  become: yes
+
+- name: Create mysql group
+  group:
+    name: mysql
+    state: present
+
+- name: Create mysql user
+  user:
+    name: mysql
+    group: mysql
+    create_home: false
+    shell: /sbin/nologin
+    system: yes
+
+- name: Add EPEL repository
+  yum:
+    name: epel-release
+    state: latest
+
+- name: Install required packages
+  yum:
+    name:
+      - cmake
+      - ncurses-devel
+      - openssl-devel
+      - bison
+      - gcc
+      - gcc-c++
+      - autoconf
+    state: latest 
+
+- name: Download MySQL tarball
+  get_url:
+    url: http://mirrors.aliyun.com/mysql/MySQL-5.6/mysql-5.6.50.tar.gz
+    dest: /usr/local/src/mysql-5.6.50.tar.gz 
+    mode: 0644
+
+- name: Extract MySQL tarball
+  ansible.builtin.unarchive:
+    src: /usr/local/src/mysql-5.6.50.tar.gz
+    dest: /usr/local/src
+    remote_src: yes

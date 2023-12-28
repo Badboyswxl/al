@@ -1,0 +1,3 @@
+- include: before_install.yml
+- include: install.yml
+- include: set_mysql.yml

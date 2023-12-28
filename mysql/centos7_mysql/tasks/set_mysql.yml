@@ -1,0 +1,20 @@
+- name: Copy secure_mysql.sh to remote host
+  ansible.builtin.copy:
+    src: files/secure.sh
+    dest: /usr/local/src/
+    mode: '0777'
+    force: no
+
+- name: Run secure_mysql.sh script
+  ansible.builtin.shell:
+    cmd: "bash /usr/local/src/secure.sh"
+  become: yes
+
+- name: Restart Mysqld
+  command: "/etc/init.d/mysqld restart"
+  become: yes
+
+- name: Enable Mysqld on boot
+  ansible.builtin.command:
+    cmd: "chkconfig --level 345 mysqld on"
+  become: yes

@@ -1,0 +1,66 @@
+- name: Compile and install MySQL
+  ansible.builtin.shell: >
+    cmake
+    -DCMAKE_INSTALL_PREFIX=/usr/local/mysql
+    -DWITH_EXTRA_CHARSETS=all
+    -DMYSQL_DATADIR=/usr/local/mysql/data
+    -DENABLED_LOCAL_INFILE=1
+    -DWITH_INNOBASE_STORAGE_ENGINE=1
+    -DMYSQL_UNIX_ADDR=/tmp/mysql.sock
+    -DSYSCONFDIR=/usr/local/mysql
+    -DDEFAULT_CHARSET=utf8
+    -DDEFAULT_COLLATION=utf8_general_ci
+    -DWITH_EXTRA_CHARSETS=all
+    -DMYSQL_TCP_PORT=3306
+    -DENABLED_DTRACE=0
+    -DDOWNLOAD_BOOST=1
+    -DWITH_BOOST=/usr/local/src/boost
+    && make && make install
+  args:
+    chdir: /usr/local/src/mysql-5.6.50
+  become: yes
+
+- name: Import mysql Lib
+  shell: echo /usr/local/mysql/lib > /etc/ld.so.conf.d/mysql.conf && ldconfig
+
+
+- name: Copy MySQL configuration file
+  ansible.builtin.copy:
+    src: files/my.cnf
+    dest: /etc/my.cnf
+  become: yes
+
+- name: Initialize MySQL
+  ansible.builtin.shell: ./scripts/mysql_install_db --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
+  args:
+    chdir: /usr/local/mysql/
+
+- name: Set up management scripts
+  template:
+    src: mysql.server.j2
+    dest: "/etc/init.d/mysqld"
+
+- name: Set execution permissions for the/etc/init.d/mysqld script
+  file:
+    path: "/etc/init.d/mysqld"
+    mode: '+x'
+  become: yes      
+
+- name: Start MySQL server
+  command: "/etc/init.d/mysqld start"
+  become: yes
+
+- name: Add MySQL bin directory to PATH in /etc/profile
+  ansible.builtin.lineinfile:
+    path: /etc/profile
+    line: 'export PATH=$PATH:/usr/local/mysql/bin'
+    create: yes
+
+- name: Add MySQL bin directory to PATH in user's .bashrc
+  ansible.builtin.lineinfile:
+    path: /root/.bashrc
+    insertafter: '^fi'
+    line: 'export PATH=$PATH:/usr/local/mysql/bin'
+
+- name: Source /etc/profile and user's .bashrc
+  ansible.builtin.shell: source /etc/profile && source /root/.bashrc

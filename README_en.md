@@ -119,7 +119,7 @@ ansible-playbook nginx.yml
 
 #### 3.2: Future Development
 
-- Install nginx using Ansible - In progress (supporting CentOS 8, Ubuntu, Debian)
+- Install nginx using Ansible - In progress (supporting CentOS 8)
 - Install MySQL using Ansible - Not started
 - Install PHP using Ansible - Not started
 
@@ -128,6 +128,10 @@ ansible-playbook nginx.yml
 
 
 ## Changelog
+### [v1.0.0] - 2023/12/27
+
+- [New] Nginx installation support system centos8.
+
 
 ### [v1.0.0] - 2023/12/26
 

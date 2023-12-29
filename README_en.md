@@ -3,11 +3,11 @@
 [**中文** ](README_zh.md) | English
 
 --------
-
 <p align="center">
-	<img alt="logo" src="https://images.cnblogs.com/cnblogs_com/blogs/382666/galleries/2173082/o_231130065447_lei.jpg" width="300" height="300">
+	<img src="images/lei.jpg" width="60" height="60">
 </p>
-<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">AL<br/>Ansible LNMP - Deploying lnmp using ansible</h1>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">AL<br/>Ansible LNMP - 使用ansible部署lnmp</h1>
+
 
 ### 1：Introduction
 

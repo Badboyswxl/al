@@ -3,7 +3,7 @@
 --------
 
 <p align="center">
-	<img src="images/lei.jpg" width="300" height="300">
+	<img src="images/lei.jpg" width="60" height="60">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">AL<br/>Ansible LNMP - 使用ansible部署lnmp</h1>
 

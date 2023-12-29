@@ -117,7 +117,7 @@ ansible-playbook nginx.yml
 cd /etc/ansible/roles/al
 ansible-playbook mysql.yml
 ```
-
+**Note: The MySQL root password is: 123456**
 #### 2.9：Start deploying PHP
 
 ```
@@ -131,7 +131,7 @@ ansible-playbook php.yml
 cd/etc/ansible/roles/al
 ansible-playbook lnmp.yml
 ```
-
+**Note: After the installation of MySQL is completed, you need to log in to the shell again, or execute `bash` on the already logged in shell to directly use MySQL**
 ### 3: Development Progress
 
 #### 3.1: Current Progress

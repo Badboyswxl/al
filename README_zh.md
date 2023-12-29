@@ -117,7 +117,7 @@ ansible-playbook nginx.yml
 cd /etc/ansible/roles/al
 ansible-playbook mysql.yml
 ```
-
+**注：Mysql root 密码为：123456**
 #### 2.9：开始部署PHP
 
 ```

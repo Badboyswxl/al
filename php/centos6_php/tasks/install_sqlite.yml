@@ -1,0 +1,28 @@
+- name: Compile and install sqlite3
+  ansible.builtin.shell:
+    cmd: "./configure --prefix=/usr/local/sqlite3 && make && make install"
+    chdir: "/usr/local/src/sqlite-autoconf-3100000"
+  become: yes
+
+- name: Backup sqlite3.pc if exists
+  ansible.builtin.command:
+    cmd: "mv /usr/lib64/pkgconfig/sqlite3.pc /usr/lib64/pkgconfig/sqlite3.pc.back"
+
+- name: Create symbolic link for sqlite3.pc
+  ansible.builtin.command:
+    cmd: "ln -s /usr/local/sqlite3/lib/pkgconfig/sqlite3.pc /usr/lib64/pkgconfig/"
+
+- name: Backup sqlite3 if exists
+  ansible.builtin.stat:
+    path: /usr/bin/sqlite3
+  register: sqlite_stat
+
+- name: Perform backup if sqlite3 binary exists
+  ansible.builtin.command:
+    cmd: "mv /usr/bin/sqlite3 /usr/bin/sqlite3.back"
+  when: sqlite_stat.stat.exists
+
+- name: Create symbolic link for sqlite3 binary
+  ansible.builtin.command:
+    cmd: "ln -s /usr/local/sqlite3/bin/sqlite3 /usr/bin/sqlite3"
+

@@ -1,0 +1,65 @@
+- name: Compile and install PHP
+  ansible.builtin.shell:
+    cmd: "./configure --prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-config-file-scan-dir=/usr/local/php/conf.d  --enable-fpm --with-fpm-user=www --with-fpm-group=www --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd  --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir  --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-magic-quotes  --enable-safe-mode --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization  --with-curl=/usr/local/curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp  --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets  --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo && make && make install"
+    chdir: "/usr/local/src/php-7.4.20"
+  become: yes
+
+- name: Copy the php.ini file
+  ansible.builtin.command:
+    cmd: "cp /usr/local/src/php-7.4.20/php.ini-production /usr/local/php/etc/php.ini"
+
+- name: Set up PHP shortcuts
+  ansible.builtin.command:
+    cmd: "ln -s /usr/local/php/bin/php /usr/bin/"
+
+- name: Set date.timezone
+  ansible.builtin.command:
+    cmd: 'sed -i "s@;date.timezone =@date.timezone = Asia/Shanghai@g" /usr/local/php/etc/php.ini'
+
+- name: Set max_execution_time
+  ansible.builtin.command:
+    cmd: 'sed -i "s@max_execution_time = 30@max_execution_time = 300@g" /usr/local/php/etc/php.ini'
+
+- name: Set up a PHP FPM file
+  template:
+    src: php-fpm.j2
+    dest: /usr/local/php/etc/php-fpm.conf
+
+- name: Set up PHP FPM startup script
+  ansible.builtin.command:
+    cmd: "cp /usr/local/src/php-7.4.20/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm"
+
+- name: Set up PHP FPM startup script permissions
+  ansible.builtin.command:
+    cmd: "chmod 755 /etc/init.d/php-fpm"
+
+- name: Create logs directory
+  ansible.builtin.file:
+    path: /usr/local/php/logs
+    state: directory
+
+- name: Add php-fpm to chkconfig
+  ansible.builtin.command:
+    cmd: "chkconfig --add php-fpm"
+
+- name: Start php-fpm service
+  ansible.builtin.command:
+    cmd: "/etc/init.d/php-fpm start"
+
+- name: Nginx supports PHP
+  template:
+    src: nginx.conf.j2
+    dest: /usr/local/nginx/conf/nginx.conf
+    backup: yes
+
+- name: Move index.html to backup
+  command: mv /usr/local/nginx/html/index.html /usr/local/nginx/html/index.html.back
+
+- name: Copy index.php to a remote host
+  copy:
+    src: files/index.php
+    dest: /usr/local/nginx/html/index.php
+  become: yes
+  notify: Restart nginx
+
+

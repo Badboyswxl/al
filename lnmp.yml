@@ -1,0 +1,22 @@
+---
+- name: Install and configure web server, database, and PHP
+  hosts: test
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Execute Nginx tasks
+      include_role:
+        name: nginx/centos{{ ansible_distribution_major_version }}_nginx
+      when: "'CentOS' in ansible_distribution"
+
+    - name: Execute MySQL tasks
+      include_role:
+        name: mysql/centos{{ ansible_distribution_major_version }}_mysql
+      when: "'CentOS' in ansible_distribution"
+
+    - name: Execute PHP tasks
+      include_role:
+        name: php/centos{{ ansible_distribution_major_version }}_php
+      when: "'CentOS' in ansible_distribution"
+

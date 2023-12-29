@@ -7,7 +7,7 @@
 
 - name: Run secure_mysql.sh script
   ansible.builtin.shell:
-    cmd: "bash /usr/local/src/secure.sh"
+    cmd: "source /etc/profile && source /root/.bashrc && bash /usr/local/src/secure.sh"
   become: yes
 
 - name: Restart Mysqld

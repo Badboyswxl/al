@@ -1,0 +1,10 @@
+- name: Compile and install oniguruma
+  ansible.builtin.shell:
+    cmd: "./configure --prefix=/usr --libdir=/lib64 && make && make install"
+    chdir: "/usr/local/src/onig-6.9.5"
+  become: yes
+
+- name: Create symbolic link for oniguruma binary
+  ansible.builtin.command:
+    cmd: "ln -s /lib64/pkgconfig/oniguruma.pc /usr/lib64/pkgconfig/"
+

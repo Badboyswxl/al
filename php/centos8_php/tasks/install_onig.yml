@@ -1,0 +1,5 @@
+- name: Compile and install oniguruma
+  ansible.builtin.shell:
+    cmd: "./configure --prefix=/usr && make && make install"
+    chdir: "/usr/local/src/onig-6.9.5"
+  become: yes

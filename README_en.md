@@ -1,13 +1,13 @@
+
+
 [**中文** ](README_zh.md) | English
 
 --------
 
 <p align="center">
-	<img src="images/lei.jpg" width="60" height="60">
+	<img alt="logo" src="https://images.cnblogs.com/cnblogs_com/blogs/382666/galleries/2173082/o_231130065447_lei.jpg" width="300" height="300">
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">AL<br/>Ansible LNMP - Deploying lnmp using ansible</h1>
-
-
 
 ### 1：Introduction
 
@@ -104,21 +104,33 @@ vim nginx.yml
 .........
 ```
 
-#### 2.7: Start Deployment Nginx
+#### 2.7: Start Deployment
 
 ```
 cd /etc/ansible/roles/al
 ansible-playbook nginx.yml
 ```
 
-#### 2.7: Start Deployment Mysql
+#### 2.8：Start deploying MySQL
 
 ```
 cd /etc/ansible/roles/al
 ansible-playbook mysql.yml
 ```
-**Note: After installing MySQL, you need to log in to the shell again, or execute `bash` on the already logged in shell to directly use MySQL**
 
+#### 2.9：Start deploying PHP
+
+```
+cd/etc/ansible/roles/al
+ansible-playbook php.yml
+```
+
+#### 2.10：Deploying LNMP
+
+```
+cd/etc/ansible/roles/al
+ansible-playbook lnmp.yml
+```
 
 ### 3: Development Progress
 
@@ -128,15 +140,23 @@ ansible-playbook mysql.yml
 
 #### 3.2: Future Development
 
-- Installing nginx using ansible - supporting system centos8- completed！
-- Installing MySQL using Ansible - Completed!
-- Install PHP using Ansible - Not started
+- Installing nginx using ansible - supporting system centos8- completed!
+
+- Installing MySQL using Ansible - Completed (supports systems Centos6, Centos7, and Centos8)!
+- Installing PHP using Ansible - Completed (supports systems Centos6, Centos7, Centos8)!
 
 
 
 
 
 ## Changelog
+
+### [v1.0.3] - 2023/12/29
+
+- [New] Added Ansible installation PHP (supports Centos6, Centos7, Centos8)
+
+- [New] One click installation of nginx, MySQL, and PHP
+
 ### [v1.0.2] - 2023/12/28
 
 - [New] Added Ansible to install MySQL (supports Centos6, Centos7, Centos8).
@@ -151,3 +171,5 @@ ansible-playbook mysql.yml
 - [Improvement] Added support for CentOS 6 and CentOS 7.
 
 This is my Markdown document. Please help me translate it into English.
+
+

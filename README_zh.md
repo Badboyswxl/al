@@ -7,8 +7,6 @@
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">AL<br/>Ansible LNMP - 使用ansible部署lnmp</h1>
 
-
-
 ### 1：简介
 
 本项目用于使用ansible来批量部署nginx、mysql、php，目的是为了环境的统一，方便管理。
@@ -119,9 +117,23 @@ ansible-playbook nginx.yml
 cd /etc/ansible/roles/al
 ansible-playbook mysql.yml
 ```
+
+#### 2.9：开始部署PHP
+
+```
+cd/etc/ansible/roles/al
+ansible-playbook php.yml
+```
+
+#### 2.10：部署LNMP
+
+```
+cd/etc/ansible/roles/al
+ansible-playbook lnmp.yml
+```
+
 **注：mysql安装完成后，需要重新登陆shell，或者在已登录的shell执行`bash`就可以直接使用mysql了**
 
-### 
 ### 3：开发进度：
 
 #### 3.1:目前进度：
@@ -131,12 +143,18 @@ ansible-playbook mysql.yml
 #### 3.2:后续开发：
 
 - 使用ansible安装nginx - 支持系统centos8 - 已完成！
-- 使用ansible安装mysql - 已完成！
-- 使用ansible安装php - 未进行
+- 使用ansible安装mysql - 已完成（支持系统centos6、centos7、centos8）！
+- 使用ansible安装php - 已完成（支持系统centos6、centos7、centos8）！
 
 
 
 ## 更新记录
+
+### [v1.0.3] - 2023/12/29
+
+- [新增] 新增ansible安装php（支持centos6、centos7、centos8）
+- [新增] 可一键安装nginx、mysql、php
+
 ### [v1.0.2] - 2023/12/28
 
 - [新增] 新增ansible安装mysql（支持centos6、centos7、centos8）
@@ -149,11 +167,5 @@ ansible-playbook mysql.yml
 
 - [新增] 新增ansible安装nginx
 - [改进] 支持系统centos6、centos7
-
-
-
-
-
-
 
 

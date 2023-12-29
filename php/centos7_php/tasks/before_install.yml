@@ -1,0 +1,58 @@
+- name: Create a www group
+  group:
+    name: www
+    state: present
+
+- name: Create a www user
+  user:
+    name: www
+    group: www
+    shell: /sbin/nologin
+    create_home: no
+    system: yes
+
+- name: Install the required packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - gcc
+    - tcl
+    - gcc-c++
+    - sqlite
+    - sqlite-devel
+    - oniguruma
+    - oniguruma-devel
+    - cmake3
+    - openssl-devel
+    - libxml2
+    - libxml2-devel
+    - libcurl-devel
+    - libpng-devel
+    - libjpeg
+    - libjpeg-devel
+    - freetype-devel
+    - libtidy-devel
+    - libxslt-devel
+    - autoconf
+    - ImageMagick-devel
+    - libmcrypt-devel
+    - libzstd
+    - libtidy 
+    - libxslt 
+    - libtool-ltdl-devel.x86_64
+
+- name: Copy installation package to remote host
+  copy:
+    src: "files/{{ item }}"
+    dest: "/usr/local/src/{{ item }}"
+  with_items:
+    - php-7.4.20.tar.gz
+
+- name: Unzip installation package
+  unarchive:
+    src: /usr/local/src/{{ item }} 
+    dest: /usr/local/src/
+    remote_src: yes 
+  with_items:
+    - php-7.4.20.tar.gz

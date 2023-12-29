@@ -110,6 +110,9 @@ vim nginx.yml
 cd /etc/ansible/roles/al
 ansible-playbook nginx.yml
 ```
+**Nginx安装路径：/usr/local/nginx**
+
+**Nginx根目录为：/usr/local/nginx/html**
 
 #### 2.8：开始部署Mysql
 
@@ -118,12 +121,18 @@ cd /etc/ansible/roles/al
 ansible-playbook mysql.yml
 ```
 **注：Mysql root 密码为：123456**
+
+**Mysql安装路径：/usr/local/mysql**
+
+**Mysql数据目录：/usr/local/mysql/data**
+
 #### 2.9：开始部署PHP
 
 ```
 cd/etc/ansible/roles/al
 ansible-playbook php.yml
 ```
+**php安装路径：/usr/local/php**
 
 #### 2.10：部署LNMP
 

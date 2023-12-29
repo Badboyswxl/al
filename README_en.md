@@ -111,7 +111,9 @@ cd /etc/ansible/roles/al
 ansible-playbook nginx.yml
 ```
 **Nginx installation path:/usr/local/nginx**
+
 **The root directory of Nginx is:/usr/local/nginx/HTML**
+
 #### 2.8：Start deploying MySQL
 
 ```
@@ -119,8 +121,11 @@ cd /etc/ansible/roles/al
 ansible-playbook mysql.yml
 ```
 **Note: The MySQL root password is: 123456**
+
 **MySQL installation path:/usr/local/mysql**
+
 **MySQL data directory:/usr/local/mysql/data**
+
 #### 2.9：Start deploying PHP
 
 ```
@@ -128,6 +133,7 @@ cd/etc/ansible/roles/al
 ansible-playbook php.yml
 ```
 **PHP installation path:/usr/local/php**
+
 #### 2.10：Deploying LNMP
 
 ```
